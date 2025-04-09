@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Course</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .course-card {
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h2>Available Courses for <span th:text="${student.username}">Student</span></h2>
+        <p class="text-muted">Select a course you'd like to enroll in.</p>
+    </div>
+
+    <!-- Courses Grid -->
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-4" th:each="course : ${courses}">
+            <div class="course-card h-100">
+                <h5 th:text="${course.name}">Course Name</h5>
+                <p class="text-muted mb-1">Instructor: <span th:text="${course.instructor.username}"></span></p>
+                <p class="text-muted">Start Date: <span th:text="${course.startDate}"></span></p>
+
+                <form th:action="@{/student/{id}/add-course(id=${student.id})}" method="post">
+                    <input type="hidden" name="courseId" th:value="${course.id}"/>
+                    <div class="d-flex justify-content-between mt-3">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-plus-circle" ></i> Enroll
+                        </button>
+                        <a th:href="@{/student/{id}(id=${student.id})}" class="btn btn-outline-secondary">
+                            Cancel
+                        </a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
